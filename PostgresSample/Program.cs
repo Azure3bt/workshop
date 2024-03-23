@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using PostgresSample.RabbitMq;
+using PostgresSample.SqlServer;
 using StackExchange.Redis;
 using System.Reflection;
 
@@ -24,12 +25,17 @@ namespace PostgresSample
 				})
 				.ConfigureServices((hostBuilder, serviceCollection) =>
 				{
-					serviceCollection.AddDbContext<DataContext>(
-						options =>
-						{
-							options.UseNpgsql();
-						}
-					);
+					//serviceCollection.AddDbContext<DataContext>(
+					//	options =>
+					//	{
+					//		options.UseNpgsql();
+					//	}
+					//);
+
+					serviceCollection.AddDbContext<InstrumentDbContext>(options =>
+					{
+						options.UseSqlServer();
+					});
 
 					serviceCollection.AddStackExchangeRedisCache(options =>
 					{
@@ -68,7 +74,7 @@ namespace PostgresSample
 							cfg.ConfigureEndpoints(context);
 						});
 					});
-					serviceCollection.AddScoped<RedisCacheService>();
+					serviceCollection.AddSingleton<RedisCacheService>();
 					serviceCollection.AddHostedService<UserProducer>();
 				});
 			IHost host = builder.Build();

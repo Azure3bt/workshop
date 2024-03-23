@@ -3,7 +3,6 @@
 using Bogus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using PostgresSample;
 
 public class DataContext : DbContext
 {

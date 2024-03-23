@@ -4,15 +4,15 @@ namespace PostgresSample.RabbitMq;
 
 public class UserConsumer : IConsumer<User>
 {
-	private readonly IBus _eventBus;
+	private readonly RedisCacheService _redisCacheService;
 
-	public UserConsumer(IBus eventBus)
+	public UserConsumer(RedisCacheService redisCacheService)
 	{
-		_eventBus = eventBus;
+		_redisCacheService = redisCacheService;
 	}
 
 	public async Task Consume(ConsumeContext<User> context)
 	{
-		await _eventBus.Publish(context.Message);
+		await _redisCacheService.SetItemCached<int, User>(context.Message);
 	}
 }

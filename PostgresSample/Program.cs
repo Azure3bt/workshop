@@ -37,9 +37,11 @@ namespace PostgresSample
 					});
 
 
-					serviceCollection.AddMassTransit(option => {
+					serviceCollection.AddMassTransit(option =>
+					{
 
-						option.UsingRabbitMq((ctx, cfg) => {
+						option.UsingRabbitMq((ctx, cfg) =>
+						{
 
 							cfg.Host("localhost", "/", h =>
 							{
@@ -50,16 +52,17 @@ namespace PostgresSample
 						});
 					});
 					serviceCollection.AddScoped<RedisCacheService>();
+					serviceCollection.AddScoped<UserProducer>();
 				});
 			IHost host = builder.Build();
 
 
-			using var dbContext = host.Services.GetRequiredService<DataContext>();
-			var redisCacheService = host.Services.GetRequiredService<RedisCacheService>();
-			foreach(var user in dbContext.Users)
-			{
-				redisCacheService.SetItemCached(user.Id.ToString(), user).GetAwaiter().GetResult();
-			}
+			//using var dbContext = host.Services.GetRequiredService<DataContext>();
+			//var redisCacheService = host.Services.GetRequiredService<RedisCacheService>();
+			//redisCacheService.SetItemCached<int, User>([.. dbContext.Users]).GetAwaiter().GetResult();
+
+			var userProducer = host.Services.GetRequiredService<UserProducer>();
+			userProducer.ProduceAllItems().GetAwaiter().GetResult();
 			host.Run();
 		}
 	}

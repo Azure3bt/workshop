@@ -31,10 +31,13 @@ namespace PostgresSample
 					//		options.UseNpgsql();
 					//	}
 					//);
-
+					
 					serviceCollection.AddDbContext<InstrumentDbContext>(options =>
 					{
-						options.UseSqlServer();
+						options.UseSqlServer(hostBuilder.Configuration.GetConnectionString("SqlConnection"), optionAction =>
+						{
+							optionAction.EnableRetryOnFailure();
+						});
 					});
 
 					serviceCollection.AddStackExchangeRedisCache(options =>
@@ -75,16 +78,15 @@ namespace PostgresSample
 						});
 					});
 					serviceCollection.AddSingleton<RedisCacheService>();
-					serviceCollection.AddHostedService<UserProducer>();
+					//serviceCollection.AddHostedService<UserProducer>();
 				});
 			IHost host = builder.Build();
 
+			using var instrumentDbContext = host.Services.GetRequiredService<InstrumentDbContext>();
+			foreach(var instrument in instrumentDbContext.Instruments)
+                Console.WriteLine(instrument.InstrumentId);
 
-			//using var dbContext = host.Services.GetRequiredService<DataContext>();
-			//var redisCacheService = host.Services.GetRequiredService<RedisCacheService>();
-			//redisCacheService.SetItemCached<int, User>([.. dbContext.Users]).GetAwaiter().GetResult();
-
-			host.Run();
+            host.Run();
 		}
 	}
 }

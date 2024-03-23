@@ -26,7 +26,7 @@ public class Instrument
 	public long? MinQuantity { get; set; }
 	public long? Tick { get; set; }
 	public long? Lot { get; set; }
-	//public MarketSegment Segment { get; set; }
+	public int Segment { get; set; }
 	public long? BaseVolume { get; set; }
 	public long? ParValue { get; set; }
 	[NotMapped]
@@ -34,20 +34,20 @@ public class Instrument
 	public string? ProductTypeCode1 { get; set; }
 	public string? ProductTypeCode2 { get; set; }
 	public string? ProductName { get; set; }
-	//public Borse? Bourse { get; set; }
+	public int? Bourse { get; set; }
 	public string GroupCode { get; set; }
 	public string GroupName { get; set; }
-	//public GroupState GroupState { get; set; }
+	public int GroupState { get; set; }
 	public bool IsActive { get; set; }
-	//public SettlementType? SettlementType { get; set; }
-	//public InstrumentState State { get; set; }
+	public int? SettlementType { get; set; }
+	public int State { get; set; }
 	public long PriceMin { get; set; }
 	public long PriceMax { get; set; }
 	public decimal AskFeeRate { get; set; }
 	public decimal BidFeeRate { get; set; }
-	//public ClassType Class { get; set; }
-	//public ClassChannel ClassChanel { get; set; }
-	//public HiddenPriceType? HiddenPriceType { get; set; }
+	public int Class { get; set; }
+	public int ClassChanel { get; set; }
+	public int? HiddenPriceType { get; set; }
 	public long? HiddenPrice { get; set; }
 	public DateTime? HiddenPriceFrom { get; set; }
 	public DateTime? HiddenPriceTo { get; set; }

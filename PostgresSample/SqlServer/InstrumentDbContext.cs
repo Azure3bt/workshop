@@ -1,26 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using PostgresSample.SqlServer.Configuration;
 
 namespace PostgresSample.SqlServer;
 
 public class InstrumentDbContext : DbContext
 {
-	private readonly IConfiguration _configuration;
 	public DbSet<Instrument> Instruments { get; set; }
 	public DbSet<InstrumentUpdaterLog> InstrumentUpdaterLog { get; set; }
 
-	public InstrumentDbContext(DbContextOptions<InstrumentDbContext> options, IConfiguration configuration) : base(options)
+	public InstrumentDbContext(DbContextOptions<InstrumentDbContext> options) : base(options)
 	{
-		_configuration = configuration;
-	}
-
-	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-	{
-		base.OnConfiguring(optionsBuilder);
-		optionsBuilder.UseSqlServer(_configuration.GetConnectionString("SqlConnection"));
 	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)

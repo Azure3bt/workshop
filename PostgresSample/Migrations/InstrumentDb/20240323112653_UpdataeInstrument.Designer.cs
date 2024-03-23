@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PostgresSample.SqlServer;
 
@@ -11,9 +12,11 @@ using PostgresSample.SqlServer;
 namespace PostgresSample.Migrations.InstrumentDb
 {
     [DbContext(typeof(InstrumentDbContext))]
-    partial class InstrumentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240323112653_UpdataeInstrument")]
+    partial class UpdataeInstrument
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

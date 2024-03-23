@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3+CVVCwt4KK7D0WSeRYwoQMTy8i09mLIG0yv/fES3Vzuv1TpjnSCq7cS4Xv89O20SNapAIjr4emj44OhYDy5HQ==",
+  "dgSpecHash": "niiqt6J24WYZwmkgACoH9TL3DXorRX605W0WW/V9iaXWbHO8rsRAQ0FfOszyk1FqpII87/cCwQgBKTvl5N20vg==",
   "success": true,
-  "projectFilePath": "D:\\PostgresSample\\PostgresSample\\PostgresSample.csproj",
+  "projectFilePath": "F:\\Projects\\workshop\\PostgresSample\\PostgresSample.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\amir3\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\amir3\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

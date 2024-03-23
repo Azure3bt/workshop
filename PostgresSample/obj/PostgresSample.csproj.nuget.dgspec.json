@@ -1,31 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "D:\\PostgresSample\\PostgresSample\\PostgresSample.csproj": {}
+    "F:\\Projects\\workshop\\PostgresSample\\PostgresSample.csproj": {}
   },
   "projects": {
-    "D:\\PostgresSample\\PostgresSample\\PostgresSample.csproj": {
+    "F:\\Projects\\workshop\\PostgresSample\\PostgresSample.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\PostgresSample\\PostgresSample\\PostgresSample.csproj",
+        "projectUniqueName": "F:\\Projects\\workshop\\PostgresSample\\PostgresSample.csproj",
         "projectName": "PostgresSample",
-        "projectPath": "D:\\PostgresSample\\PostgresSample\\PostgresSample.csproj",
+        "projectPath": "F:\\Projects\\workshop\\PostgresSample\\PostgresSample.csproj",
         "packagesPath": "C:\\Users\\amir3\\.nuget\\packages\\",
-        "outputPath": "D:\\PostgresSample\\PostgresSample\\obj\\",
+        "outputPath": "F:\\Projects\\workshop\\PostgresSample\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\amir3\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },

@@ -1,8 +1,9 @@
 ﻿using MassTransit;
+using Microsoft.Extensions.Hosting;
 
 namespace PostgresSample.RabbitMq;
 
-public class UserProducer
+public class UserProducer : BackgroundService
 {
 	private readonly IBus _eventBus;
 	private readonly RedisCacheService _redisCacheService;
@@ -12,17 +13,15 @@ public class UserProducer
 		_redisCacheService = redisCacheService;
 	}
 
-	public async Task Produce(User user)
+	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 	{
-		await _eventBus.Publish(user);
-	}
-
-	public async Task ProduceAllItems()
-	{
-		foreach (var item in await _redisCacheService.GetAllItems<User>())
+		while (!stoppingToken.IsCancellationRequested)
 		{
-			await _eventBus.Publish<User>(item);
-			await Task.Delay(20_000);
+			foreach (var item in await _redisCacheService.GetAllItems<User>())
+			{
+				await _eventBus.Publish<User>(item);
+				await Task.Delay(2000);
+			}
 		}
 	}
 }

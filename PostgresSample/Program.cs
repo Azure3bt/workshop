@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using PostgresSample.RabbitMq;
 using StackExchange.Redis;
+using System.Reflection;
 
 namespace PostgresSample
 {
@@ -37,22 +38,38 @@ namespace PostgresSample
 					});
 
 
-					serviceCollection.AddMassTransit(option =>
+					serviceCollection.AddMassTransit(x =>
 					{
+						x.SetKebabCaseEndpointNameFormatter();
 
-						option.UsingRabbitMq((ctx, cfg) =>
+						// By default, sagas are in-memory, but should be changed to a durable
+						// saga repository.
+						x.SetInMemorySagaRepositoryProvider();
+
+						var entryAssembly = Assembly.GetEntryAssembly();
+
+						x.AddConsumers(entryAssembly);
+						x.AddSagaStateMachines(entryAssembly);
+						x.AddSagas(entryAssembly);
+						x.AddActivities(entryAssembly);
+
+						//x.UsingInMemory((context, cfg) =>
+						//{
+						//	cfg.ConfigureEndpoints(context);
+						//});
+						x.UsingRabbitMq((context, cfg) =>
 						{
-
 							cfg.Host("localhost", "/", h =>
 							{
 								h.Username("guest");
 								h.Password("guest");
 							});
-							option.AddConsumer<UserConsumer>();
+
+							cfg.ConfigureEndpoints(context);
 						});
 					});
 					serviceCollection.AddScoped<RedisCacheService>();
-					serviceCollection.AddScoped<UserProducer>();
+					serviceCollection.AddHostedService<UserProducer>();
 				});
 			IHost host = builder.Build();
 
@@ -61,8 +78,6 @@ namespace PostgresSample
 			//var redisCacheService = host.Services.GetRequiredService<RedisCacheService>();
 			//redisCacheService.SetItemCached<int, User>([.. dbContext.Users]).GetAwaiter().GetResult();
 
-			var userProducer = host.Services.GetRequiredService<UserProducer>();
-			userProducer.ProduceAllItems().GetAwaiter().GetResult();
 			host.Run();
 		}
 	}

@@ -25,27 +25,26 @@ namespace PostgresSample
 				})
 				.ConfigureServices((hostBuilder, serviceCollection) =>
 				{
-					//serviceCollection.AddDbContext<DataContext>(
-					//	options =>
-					//	{
-					//		options.UseNpgsql();
-					//	}
-					//);
-					
-					serviceCollection.AddDbContext<InstrumentDbContext>(options =>
-					{
-						options.UseSqlServer(hostBuilder.Configuration.GetConnectionString("SqlConnection"), optionAction =>
+					serviceCollection.AddDbContext<DataContext>(
+						options =>
 						{
-							optionAction.EnableRetryOnFailure();
-						});
-					});
+							options.UseNpgsql();
+						}
+					);
+
+					//serviceCollection.AddDbContext<InstrumentDbContext>(options =>
+					//{
+					//	options.UseSqlServer(hostBuilder.Configuration.GetConnectionString("SqlConnection"), optionAction =>
+					//	{
+					//		optionAction.EnableRetryOnFailure();
+					//	});
+					//});
 
 					serviceCollection.AddStackExchangeRedisCache(options =>
 					{
 						options.Configuration = hostBuilder.Configuration.GetConnectionString("RedisConn");
 						options.InstanceName = "GamesCatalog_";
 					});
-
 
 					serviceCollection.AddMassTransit(x =>
 					{
@@ -68,7 +67,7 @@ namespace PostgresSample
 						//});
 						x.UsingRabbitMq((context, cfg) =>
 						{
-							cfg.Host("localhost", "/", h =>
+							cfg.Host("172.17.0.3", "/", h =>
 							{
 								h.Username("guest");
 								h.Password("guest");
@@ -78,15 +77,22 @@ namespace PostgresSample
 						});
 					});
 					serviceCollection.AddSingleton<RedisCacheService>();
-					//serviceCollection.AddHostedService<UserProducer>();
+					serviceCollection.AddHostedService<UserProducer>();
 				});
 			IHost host = builder.Build();
-
-			using var instrumentDbContext = host.Services.GetRequiredService<InstrumentDbContext>();
-			foreach(var instrument in instrumentDbContext.Instruments)
-                Console.WriteLine(instrument.InstrumentId);
-
-            host.Run();
+			//try
+			//{
+			//	using var instrumentDbContext = host.Services.GetRequiredService<InstrumentDbContext>();
+			//	Console.WriteLine(instrumentDbContext.Instruments.ToList().Count());
+			//	foreach (var instrument in instrumentDbContext.Instruments)
+			//		Console.WriteLine(instrument.InstrumentId);
+			//}
+			//catch (Exception ex)
+			//{
+			//	Console.WriteLine(ex.Message);
+			//	Console.WriteLine(ex.StackTrace);
+			//}
+			host.Run();
 		}
 	}
 }

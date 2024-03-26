@@ -20,6 +20,7 @@ public class UserProducer : BackgroundService
 			foreach (var item in await _redisCacheService.GetAllItems<User>())
 			{
 				await _eventBus.Publish<User>(item);
+				await Console.Out.WriteLineAsync($"Message with : {item.Id} has been published!");
 				await Task.Delay(2000);
 			}
 		}

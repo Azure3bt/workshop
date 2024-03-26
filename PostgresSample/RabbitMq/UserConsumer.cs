@@ -13,6 +13,7 @@ public class UserConsumer : IConsumer<User>
 
 	public async Task Consume(ConsumeContext<User> context)
 	{
+		await Console.Out.WriteLineAsync($"Message with : {context.Message.Id} has been consumed!");
 		await _redisCacheService.SetItemCached<int, User>(context.Message);
 	}
 }
